@@ -45,15 +45,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/date_and_time"
-                android:textColor="@color/colorPrimary"
-                android:textSize="17sp" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginStart="0dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:text="@string/date_and_time"-->
+<!--                android:textColor="@color/colorPrimary"-->
+<!--                android:textSize="17sp" />-->
 
 <!--            <Button-->
 <!--                android:layout_width="24dp"-->
@@ -70,8 +70,9 @@
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:importantForAutofill="no"
-                android:inputType="text"
-                android:text="@={viewmodel.CardDate}"
+                android:hint="Дата"
+                android:inputType="datetime"
+                android:text="@={viewmodel.cardDate}"
                 android:textIsSelectable="false"
                 android:textSize="20sp" />
 
@@ -81,11 +82,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".3"
                 android:focusable="false"
+                android:hint="Время"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:importantForAutofill="no"
-                android:inputType="text"
-                android:text="@={viewmodel.CardTime}"
+                android:inputType="datetime"
+                android:text="@={viewmodel.cardTime}"
                 android:textIsSelectable="false"
                 android:textSize="20sp" />
 
@@ -111,6 +113,7 @@
             android:background="@null"
             android:inputType="textPersonName"
             android:hint="Введите название"
+            android:text="@={viewmodel.cardName}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -125,14 +128,15 @@
             android:ems="10"
             android:layout_marginTop="16dp"
             android:background="@null"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine"
             android:hint="Описание..."
+            android:text="@={viewmodel.cardUnformattedText}"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextCardName" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_card_button"
+            android:id="@+id/add_card_button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

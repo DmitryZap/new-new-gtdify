@@ -13,7 +13,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 import ru.techpark.new_new_gtdify.ActivityListener;
 import ru.techpark.new_new_gtdify.model.Card;
@@ -22,13 +24,13 @@ import ru.techpark.new_new_gtdify.model.repository.CardRepository;
 
 public class CardViewModel extends AndroidViewModel {
     private Card cardItem;
-    public MutableLiveData<Integer> CardID = new MutableLiveData<>();
-    public MutableLiveData<String> CardName = new MutableLiveData<>();
-    public MutableLiveData<Integer> SectionID = new MutableLiveData<>();
-    public MutableLiveData<String> CardUnformattedText  = new MutableLiveData<>();
-    public MutableLiveData<String> CardDate = new MutableLiveData<>();
-    public MutableLiveData<String> CardTime = new MutableLiveData<>();
-    public MutableLiveData<Long> Deadline = new MutableLiveData<>();
+    public MutableLiveData<Integer> cardID = new MutableLiveData<>();
+    public MutableLiveData<String> cardName = new MutableLiveData<>();
+    public MutableLiveData<Integer> sectionID = new MutableLiveData<>();
+    public MutableLiveData<String> cardUnformattedText  = new MutableLiveData<>();
+    public MutableLiveData<String> cardDate = new MutableLiveData<>();
+    public MutableLiveData<String> cardTime = new MutableLiveData<>();
+    public MutableLiveData<Long> deadline = new MutableLiveData<>();
 
     private CardRepository cardRepository;
 
@@ -41,7 +43,10 @@ public class CardViewModel extends AndroidViewModel {
     public CardViewModel(Application application) {
         super(application);
         cardRepository = new CardRepository(application);
+
+
         calendar = Calendar.getInstance();
+
 
         setDate();
     }
@@ -58,12 +63,12 @@ public class CardViewModel extends AndroidViewModel {
     public void edit(Card card) {
         if (card != null && card.getId() > 0) {
             cardItem = card;
-            CardID.setValue(card.getId());
-            CardName.setValue(card.getName());
-            CardUnformattedText.setValue(card.getUnformattedText());
-//             SectionID.setValue(card.getSection());
-            if (card.getDeadline() != null && card.getDeadline() > 0)
-                calendar.setTimeInMillis(card.getDeadline());
+            cardID.setValue(card.getId());
+            cardName.setValue(card.getName());
+            cardUnformattedText.setValue(card.getUnformattedText());
+//             sectionID.setValue(card.getSection());
+//            if (card.getDeadline() != null && card.getDeadline() > 0)
+//                calendar.setTimeInMillis(card.getDeadline());
         }
         setDate();
     }
@@ -72,25 +77,25 @@ public class CardViewModel extends AndroidViewModel {
     public void onSave(View v) {
         Date date = calendar.getTime();
 
-        if (CardID.getValue() != null && CardID.getValue() > 0) {
+        if (cardID.getValue() != null && cardID.getValue() > 0) {
             Card card = cardItem;
-            card.setUnformattedText(CardUnformattedText.getValue());
-            card.setName(CardName.getValue());
-            // card.setUserId(App.getSession().getUserId());
-            // card.setRosterId(RosterID.getValue());
-            card.setDeadline(date.getTime());
+            card.setUnformattedText(cardUnformattedText.getValue());
+            card.setName(cardName.getValue());
+//            card.setUserId(App.getSession().getUserId());
+//            card.setRosterId(RosterID.getValue());
+//            card.setDeadline(date.getTime());
 //            card.setCreateDate(new Date().getTime());
-            cardRepository.updateCard(card);
+//            cardRepository.updateCard(card);
         } else {
             Card card = new Card();
-            card.setUnformattedText(CardUnformattedText.getValue());
-            card.setName(CardName.getValue());
+            card.setName(cardName.getValue());
+            card.setUnformattedText(cardUnformattedText.getValue());
 //            card.setUserId(CardApplication.getSession().getUserId());
 //            card.setRosterId(RosterID.getValue());
-            card.setDeadline(date.getTime());
+//            card.setDeadline(date.getTime());
 //            card.setCreateDate(new Date().getTime());
 //            card.setIdentifier(UUID.randomUUID().toString());
-            // card.setStatus(CardStatus.TODO.toString());
+//             card.setStatus(CardStatus.TODO.toString());
             cardRepository.addCard(card);
             activityListener.onProcess(ProcessType.ADD, card);
         }
@@ -114,14 +119,14 @@ public class CardViewModel extends AndroidViewModel {
             @SuppressLint("SimpleDateFormat") SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date dateInDateFormat = newDateFormat.parse(d);
             String dateString = newDateFormat.format(dateInDateFormat);
-            CardDate.setValue(dateString);
+            cardDate.setValue(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        CardTime.setValue(String.format("%02d", hour) + ":" + String.format("%02d", minute));
+        cardTime.setValue(String.format("%02d", hour) + ":" + String.format("%02d", minute));
     }
 
-    public void SetDate(int year, int month, int day) {
+    public void setDateInCalendar(int year, int month, int day) {
         if (year > 0)
             this.year = year;
         if (month > 0)
@@ -132,7 +137,7 @@ public class CardViewModel extends AndroidViewModel {
         calendar.set(this.year, this.month, this.day);
     }
 
-    public void SetTime(int hour, int minute, int second) {
+    public void setTimeInCalendar(int hour, int minute, int second) {
         if (hour >= 0)
             this.hour = hour;
         if (minute >= 0)
@@ -141,6 +146,4 @@ public class CardViewModel extends AndroidViewModel {
             this.second = second;
         calendar.set(this.year, this.month, this.day, this.day, this.minute);
     }
-
-
 }

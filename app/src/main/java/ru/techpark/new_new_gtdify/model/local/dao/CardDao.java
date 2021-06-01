@@ -11,18 +11,21 @@ import androidx.room.Update;
 
 import java.util.List;
 
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import ru.techpark.new_new_gtdify.model.Card;
 
 @Dao
 public interface CardDao {
     @Query("SELECT * FROM card_table")
-    List<Card> getAllCards();
+    Flowable<List<Card>> getAllCards();
 
     @Query("SELECT * FROM card_table")
     LiveData<List<Card>> getAllCardsLiveData();
 
     @Query("SELECT * FROM card_table WHERE id IN (:cardIds)")
-    List<Card> loadAllCardsByIds(int[] cardIds);
+    Flowable<List<Card>> getAllCardsByIds(int[] cardIds);
 
     @Query("SELECT * FROM card_table WHERE id = :uid LIMIT 1")
     Card findById(int uid);
@@ -30,12 +33,13 @@ public interface CardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void add(Card card);
 
-//    @Query("SELECT * FROM card_table WHERE section =:sectionID ")
-//    List<Card> getAllCardsBySection(int sectionID);
+    // TODO: выборка по секции
+    //    @Query("SELECT * FROM card_table WHERE section =:sectionID ")
+    //    List<Card> getAllCardsBySection(int sectionID);
 
     @Update
-    void update(Card card);
+    Completable update(Card card);
 
     @Delete
-    void delete(Card card);
+    Completable delete(Card card);
 }

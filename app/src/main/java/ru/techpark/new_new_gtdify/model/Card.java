@@ -18,15 +18,15 @@ public class Card implements Serializable {
 
     private String unformattedText;
 
-    private int priority = 0;
+//    private int priority = 0;
 
     // private long timestamp;
 
 
     // private int section;
 
-    private Long deadline;
-    private boolean isComplete;
+//    private Long deadline;
+//    private boolean isComplete;
 
     public Card() {    }
 //    public Card(String name, String unformattedText, int priority, Long deadline, boolean isComplete) {
@@ -42,8 +42,8 @@ public class Card implements Serializable {
         id = in.readInt();
         name = in.readString();
         unformattedText = in.readString();
-        priority = in.readInt();
-        isComplete = in.readByte() != 0;
+//        priority = in.readInt();
+//        isComplete = in.readByte() != 0;
     }
 
     public void setId(int id) {
@@ -62,17 +62,17 @@ public class Card implements Serializable {
         return unformattedText;
     }
 
-    public int getPriority() {
-        return priority;
-    }
-
-    public Long getDeadline() {
-        return deadline;
-    }
-
-    public boolean isComplete() {
-        return isComplete;
-    }
+//    public int getPriority() {
+//        return priority;
+//    }
+//
+//    public Long getDeadline() {
+//        return deadline;
+//    }
+//
+//    public boolean isComplete() {
+//        return isComplete;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -82,17 +82,17 @@ public class Card implements Serializable {
         this.unformattedText = unformattedText;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public void setDeadline(Long deadline) {
-        this.deadline = deadline;
-    }
-
-    public void setComplete(boolean complete) {
-        isComplete = complete;
-    }
+//    public void setPriority(int priority) {
+//        this.priority = priority;
+//    }
+//
+//    public void setDeadline(Long deadline) {
+//        this.deadline = deadline;
+//    }
+//
+//    public void setComplete(boolean complete) {
+//        isComplete = complete;
+//    }
 
 //    public int getSection() {
 //        return section;
@@ -102,22 +102,22 @@ public class Card implements Serializable {
 //        return deadline;
 //    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return id == card.id &&
-                priority == card.priority &&
-                isComplete == card.isComplete &&
-                Objects.equals(name, card.name) &&
-                Objects.equals(unformattedText, card.unformattedText) &&
-                Objects.equals(deadline, card.deadline);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, unformattedText, priority, deadline, isComplete);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Card card = (Card) o;
+//        return id == card.id &&
+//                priority == card.priority &&
+//                isComplete == card.isComplete &&
+//                Objects.equals(name, card.name) &&
+//                Objects.equals(unformattedText, card.unformattedText) &&
+//                Objects.equals(deadline, card.deadline);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, name, unformattedText, priority, deadline, isComplete);
+//    }
 
 }

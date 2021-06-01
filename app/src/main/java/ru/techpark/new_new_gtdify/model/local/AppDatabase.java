@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import ru.techpark.new_new_gtdify.model.Card;
 import ru.techpark.new_new_gtdify.model.local.dao.CardDao;
 
-@Database(entities = {Card.class}, version = 1, exportSchema = false)
+@Database(entities = {Card.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 
@@ -20,6 +20,7 @@ public abstract class AppDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, "gtdify_database")
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build();
         }
         return instance;

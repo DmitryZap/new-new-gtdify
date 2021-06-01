@@ -1,6 +1,7 @@
 package ru.techpark.new_new_gtdify.model.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -26,10 +27,10 @@ public class CardRepository {
     }
 
     public void  addCard (Card card) {
-        database.getCardDao().add(card);
-        //         Observable.fromCallable(() -> cardDao.add(card))
-//                .subscribeOn(Schedulers.io())
-//                .subscribe();
+//        database.getCardDao().add(card);
+        Completable.fromRunnable(() -> database.getCardDao().add(card))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
 //    public void deleteCard (Card card) {

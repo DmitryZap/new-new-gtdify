@@ -28,7 +28,12 @@ public class Card implements Serializable {
 //    private Long deadline;
 //    private boolean isComplete;
 
-    public Card() {    }
+    public Card() {}
+
+    public Card(String name, String unformattedText) {
+        this.name = name;
+        this.unformattedText = unformattedText;
+    }
 //    public Card(String name, String unformattedText, int priority, Long deadline, boolean isComplete) {
 //        this.name = name;
 //        this.unformattedText = unformattedText;
@@ -38,13 +43,13 @@ public class Card implements Serializable {
 //        this.isComplete = isComplete;
 //    }
 
-    protected Card(Parcel in) {
-        id = in.readInt();
-        name = in.readString();
-        unformattedText = in.readString();
-//        priority = in.readInt();
-//        isComplete = in.readByte() != 0;
-    }
+//    protected Card(Parcel in) {
+//        id = in.readInt();
+//        name = in.readString();
+//        unformattedText = in.readString();
+////        priority = in.readInt();
+////        isComplete = in.readByte() != 0;
+//    }
 
     public void setId(int id) {
         this.id = id;

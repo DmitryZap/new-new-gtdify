@@ -18,14 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.techpark.new_new_gtdify.R;
 import ru.techpark.new_new_gtdify.card.CardActivity;
 import ru.techpark.new_new_gtdify.card.CardViewModel;
 import ru.techpark.new_new_gtdify.databinding.FragmentProjectBinding;
-import ru.techpark.new_new_gtdify.databinding.FragmentSectionBinding;
-import ru.techpark.new_new_gtdify.databinding.ItemCardBinding;
 import ru.techpark.new_new_gtdify.main.MainActivity;
 import ru.techpark.new_new_gtdify.model.Card;
 import ru.techpark.new_new_gtdify.model.CardStatus;
@@ -36,7 +35,7 @@ public class ProjectFragment extends Fragment {
 
     private ProjectViewModel mViewModel;
     private @NonNull FragmentProjectBinding binding;
-
+    private ProjectCardRecyclerViewAdapter adapter = new ProjectCardRecyclerViewAdapter();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,28 +56,34 @@ public class ProjectFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
 
-        ProjectCardRecyclerViewAdapter adapter = new ProjectCardRecyclerViewAdapter();
-
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.cards_recycler);
 
 
-//        binding.cardsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.cards_recycler);
+
+
+        binding.cardsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mViewModel.getCardList().observe(getViewLifecycleOwner(), (List<Card> it) -> {
             adapter.setValues(it);
             adapter.notifyDataSetChanged();
         });
 
-//        binding.cardsRecycler.setAdapter(adapter);
-        recyclerView.setAdapter(adapter);
+        binding.cardsRecycler.setAdapter(adapter);
+//        recyclerView.setAdapter(adapter);
 
-
+//        return rootView;
         return binding.getRoot();
     }
 
     public interface OnProjectFragmentInteractionListener {
         // TODO: Update argument type and name
         void onProjectFragmentInteraction(Card item, CardStatus status);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

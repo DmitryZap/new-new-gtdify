@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/backgroundColor"
-    android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">
+    <!--    android:background="backgroundColor"-->
+
+    <!--    android:foreground="?attr/selectableItemBackground"-->
 
     <CheckBox
         android:id="@+id/card_checkbox"
@@ -14,7 +15,7 @@
 
     <TextView
         android:id="@+id/card_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

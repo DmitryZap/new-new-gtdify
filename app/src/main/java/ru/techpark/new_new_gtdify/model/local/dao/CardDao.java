@@ -31,15 +31,15 @@ public interface CardDao {
     Card findById(int uid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void add(Card card);
+    void addCard(Card card);
 
     // TODO: выборка по секции
     //    @Query("SELECT * FROM card_table WHERE section =:sectionID ")
     //    List<Card> getAllCardsBySection(int sectionID);
 
     @Update
-    Completable update(Card card);
+    void updateCard(Card card);
 
     @Delete
-    Completable delete(Card card);
+    void deleteCard(Card card);
 }

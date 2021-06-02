@@ -26,7 +26,7 @@ public class Card implements Serializable {
     // private int section;
 
 //    private Long deadline;
-//    private boolean isComplete;
+    private boolean isComplete = false;
 
     public Card() {}
 
@@ -70,14 +70,22 @@ public class Card implements Serializable {
 //    public int getPriority() {
 //        return priority;
 //    }
+//    public void setPriority(int priority) {
+//        this.priority = priority;
+//    }
+
 //
 //    public Long getDeadline() {
 //        return deadline;
 //    }
 //
-//    public boolean isComplete() {
-//        return isComplete;
-//    }
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -86,18 +94,11 @@ public class Card implements Serializable {
     public void setUnformattedText(String unformattedText) {
         this.unformattedText = unformattedText;
     }
-
-//    public void setPriority(int priority) {
-//        this.priority = priority;
-//    }
 //
 //    public void setDeadline(Long deadline) {
 //        this.deadline = deadline;
 //    }
 //
-//    public void setComplete(boolean complete) {
-//        isComplete = complete;
-//    }
 
 //    public int getSection() {
 //        return section;

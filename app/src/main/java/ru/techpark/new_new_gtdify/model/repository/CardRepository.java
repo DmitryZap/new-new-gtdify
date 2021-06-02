@@ -23,27 +23,26 @@ public class CardRepository {
 
     public CardRepository(Application application) {
         database = AppDatabase.getInstance(application);
-
     }
 
     public void  addCard (Card card) {
 //        database.getCardDao().add(card);
-        Completable.fromRunnable(() -> database.getCardDao().add(card))
+        Completable.fromRunnable(() -> database.getCardDao().addCard(card))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
 //    public void deleteCard (Card card) {
-//        Observable.fromCallable(() -> cardDao.delete(card))
+//        Observable.fromRunnable(() -> database.getCardDao().deleteCard(card))
 //                .subscribeOn(Schedulers.io())
 //                .subscribe();
 //    }
 //
-//    public void updateCard (Card card) {
-//        Observable.fromCallable(() -> cardDao.update(card))
-//                .subscribeOn(Schedulers.io())
-//                .subscribe();
-//    }
+    public void updateCard (Card card) {
+        Completable.fromRunnable(() -> database.getCardDao().updateCard(card))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
 
     public Flowable<List<Card>> getCardList() {
         return database.getCardDao().getAllCards();

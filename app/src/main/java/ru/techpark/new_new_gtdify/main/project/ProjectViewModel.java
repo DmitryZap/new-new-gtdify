@@ -32,4 +32,8 @@ public class ProjectViewModel extends AndroidViewModel {
     public MutableLiveData<List<Card>> getCardList() {
         return cards;
     }
+
+    public void updateCard(Card card) {
+        repository.updateCard(card);
+    }
 }

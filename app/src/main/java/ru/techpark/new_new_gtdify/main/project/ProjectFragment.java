@@ -29,13 +29,13 @@ import ru.techpark.new_new_gtdify.main.MainActivity;
 import ru.techpark.new_new_gtdify.model.Card;
 import ru.techpark.new_new_gtdify.model.CardStatus;
 
-public class ProjectFragment extends Fragment {
+public class ProjectFragment extends Fragment implements CheckBoxClickListener {
 
     private FloatingActionButton mFAB;
 
     private ProjectViewModel mViewModel;
     private @NonNull FragmentProjectBinding binding;
-    private ProjectCardRecyclerViewAdapter adapter = new ProjectCardRecyclerViewAdapter();
+    private ProjectCardRecyclerViewAdapter adapter = new ProjectCardRecyclerViewAdapter(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,13 +56,7 @@ public class ProjectFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
 
-
-
-//        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.cards_recycler);
-
-
         binding.cardsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mViewModel.getCardList().observe(getViewLifecycleOwner(), (List<Card> it) -> {
             adapter.setValues(it);
@@ -70,10 +64,13 @@ public class ProjectFragment extends Fragment {
         });
 
         binding.cardsRecycler.setAdapter(adapter);
-//        recyclerView.setAdapter(adapter);
 
-//        return rootView;
         return binding.getRoot();
+    }
+
+    @Override
+    public void onCheckClick(Card card) {
+        mViewModel.updateCard(card);
     }
 
     public interface OnProjectFragmentInteractionListener {

@@ -1,10 +1,15 @@
 package ru.techpark.new_new_gtdify.main.project;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.text.SpannableString;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,11 +24,17 @@ import ru.techpark.new_new_gtdify.model.Card;
 
 public class ProjectCardRecyclerViewAdapter extends RecyclerView.Adapter<ProjectCardRecyclerViewAdapter.ViewHolder>{
     private List<Card> mValues = new ArrayList<>();
+    private CheckBoxClickListener mCheckBoxClickListener;
 
     public void setValues(List<Card> mValues) {
         this.mValues = mValues;
         notifyDataSetChanged();
     }
+
+    public ProjectCardRecyclerViewAdapter(CheckBoxClickListener checkBoxClickListener) {
+        mCheckBoxClickListener = checkBoxClickListener;
+    }
+
 
     @NonNull
     @Override
@@ -39,9 +50,31 @@ public class ProjectCardRecyclerViewAdapter extends RecyclerView.Adapter<Project
 
     @Override
     public void onBindViewHolder(@NonNull ProjectCardRecyclerViewAdapter.ViewHolder holder, int position) {
-        Card mItem = mValues.get(position);
-        holder.title.setText(mItem.getName());
+        holder.mItem = mValues.get(position);
+
+        holder.title.setText(holder.mItem.getName());
+
+        setupCardCheckboxState(holder);
+
+        holder.checkBox.setOnClickListener(v -> {
+            setupCardCheckboxState(holder);
+
+            holder.mItem.setComplete(!holder.mItem.isComplete());
+            mCheckBoxClickListener.onCheckClick(holder.mItem);
+        });
+
+
         // TODO: добавить кнопки для действий над карточкой
+    }
+
+
+    private void setupCardCheckboxState (@NonNull ProjectCardRecyclerViewAdapter.ViewHolder holder) {
+        holder.checkBox.setChecked(holder.mItem.isComplete());
+        if(holder.checkBox.isChecked()) {
+            holder.title.setPaintFlags(holder.title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            holder.title.setPaintFlags(holder.title.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
     }
 
     @Override
@@ -53,17 +86,19 @@ public class ProjectCardRecyclerViewAdapter extends RecyclerView.Adapter<Project
         public final View mView;
         public Card mItem;
         public TextView title;
+        public CheckBox checkBox;
 //        public TextView text;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             title = (TextView) itemView.findViewById(R.id.card_title);
+            checkBox = (CheckBox) itemView.findViewById(R.id.card_checkbox);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + title.getText() + "'";
+            return super.toString() + " '" + checkBox.getText() + "'";
         }
     }
 

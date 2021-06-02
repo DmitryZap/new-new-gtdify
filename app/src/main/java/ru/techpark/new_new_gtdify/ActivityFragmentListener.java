@@ -2,7 +2,7 @@ package ru.techpark.new_new_gtdify;
 
 import ru.techpark.new_new_gtdify.model.ProcessType;
 
-public interface ActivityListener {
+public interface ActivityFragmentListener {
     void onStarted();
 
     void onSuccess(Boolean state);

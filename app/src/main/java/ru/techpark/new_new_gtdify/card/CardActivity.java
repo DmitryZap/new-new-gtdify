@@ -24,14 +24,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 
-import ru.techpark.new_new_gtdify.ActivityListener;
+import ru.techpark.new_new_gtdify.ActivityFragmentListener;
 import ru.techpark.new_new_gtdify.R;
 import ru.techpark.new_new_gtdify.databinding.ActivityCardBinding;
 import ru.techpark.new_new_gtdify.model.Card;
 import ru.techpark.new_new_gtdify.model.ProcessType;
 import ru.techpark.new_new_gtdify.utils.KeyboardHelper;
 
-public class CardActivity extends AppCompatActivity implements ActivityListener {
+
+// TODO: Заменить на ViewBinding
+public class CardActivity extends AppCompatActivity implements ActivityFragmentListener {
 
     Toolbar mToolbar;
     CardViewModel mViewModel;
@@ -112,7 +114,6 @@ public class CardActivity extends AppCompatActivity implements ActivityListener 
         Intent returnIntent = new Intent();
         if (state) {
             setResult(Activity.RESULT_OK, returnIntent);
-            Log.v("TEST", "Все ок");
         } else {
             setResult(Activity.RESULT_CANCELED, returnIntent);
         }

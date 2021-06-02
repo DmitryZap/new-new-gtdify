@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
-import ru.techpark.new_new_gtdify.ActivityListener;
+import ru.techpark.new_new_gtdify.ActivityFragmentListener;
+import ru.techpark.new_new_gtdify.main.project.AddCardListener;
 import ru.techpark.new_new_gtdify.model.Card;
 import ru.techpark.new_new_gtdify.model.ProcessType;
 import ru.techpark.new_new_gtdify.model.repository.CardRepository;
@@ -34,7 +35,9 @@ public class CardViewModel extends AndroidViewModel {
 
     private CardRepository cardRepository;
 
-    private ActivityListener activityListener;
+    private ActivityFragmentListener activityListener;
+    private AddCardListener addCardListener;
+
 
     private Calendar calendar;
 
@@ -51,14 +54,17 @@ public class CardViewModel extends AndroidViewModel {
         setDate();
     }
 
-    public ActivityListener getActivityListener() {
+    public ActivityFragmentListener getActivityListener() {
         return activityListener;
     }
 
-    public void setActivityListener(ActivityListener activityListener) {
+    public void setActivityListener(ActivityFragmentListener activityListener) {
         this.activityListener = activityListener;
     }
 
+    public void setAddCardListener(AddCardListener addCardListener) {
+        this.addCardListener = addCardListener;
+    }
 
     public void edit(Card card) {
         if (card != null && card.getId() > 0) {
@@ -79,13 +85,13 @@ public class CardViewModel extends AndroidViewModel {
 
         if (cardID.getValue() != null && cardID.getValue() > 0) {
             Card card = cardItem;
-            card.setUnformattedText(cardUnformattedText.getValue());
             card.setName(cardName.getValue());
+            card.setUnformattedText(cardUnformattedText.getValue());
 //            card.setUserId(App.getSession().getUserId());
 //            card.setRosterId(RosterID.getValue());
 //            card.setDeadline(date.getTime());
 //            card.setCreateDate(new Date().getTime());
-//            cardRepository.updateCard(card);
+            cardRepository.updateCard(card);
         } else {
             Card card = new Card();
             card.setName(cardName.getValue());

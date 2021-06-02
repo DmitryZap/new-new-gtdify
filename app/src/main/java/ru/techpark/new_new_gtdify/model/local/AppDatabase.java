@@ -7,13 +7,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import ru.techpark.new_new_gtdify.model.Card;
+import ru.techpark.new_new_gtdify.model.Project;
+import ru.techpark.new_new_gtdify.model.Section;
 import ru.techpark.new_new_gtdify.model.local.dao.CardDao;
+import ru.techpark.new_new_gtdify.model.local.dao.SectionDao;
 
-@Database(entities = {Card.class}, version = 1, exportSchema = false)
+@Database(entities = {Card.class, Section.class, Project.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 
     public abstract CardDao getCardDao();
+    public abstract SectionDao getSectionDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {

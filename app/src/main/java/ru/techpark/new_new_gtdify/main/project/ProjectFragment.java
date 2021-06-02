@@ -1,5 +1,7 @@
 package ru.techpark.new_new_gtdify.main.project;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,9 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,8 +38,6 @@ import ru.techpark.new_new_gtdify.model.CardStatus;
 
 public class ProjectFragment extends Fragment implements CheckBoxClickListener {
 
-    private FloatingActionButton mFAB;
-
     private ProjectViewModel mViewModel;
     private @NonNull FragmentProjectBinding binding;
     private ProjectCardRecyclerViewAdapter adapter = new ProjectCardRecyclerViewAdapter(this);
@@ -42,28 +47,45 @@ public class ProjectFragment extends Fragment implements CheckBoxClickListener {
         super.onCreate(savedInstanceState);
     }
 
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Toast toast = Toast.makeText(getContext(),
+                            "Карточка создана", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            });
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_project, container, false);
 
         binding = FragmentProjectBinding.inflate(inflater, container, false);
         binding.addCardButton.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), CardActivity.class);
-            startActivity(intent);
+            someActivityResultLauncher.launch(intent);
 //                getActivity().finish();
         });
 
         mViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
 
-        binding.cardsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.sectionsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mViewModel.getCardList().observe(getViewLifecycleOwner(), (List<Card> it) -> {
             adapter.setValues(it);
-            adapter.notifyDataSetChanged();
+            // adapter.notifyDataSetChanged();
         });
 
-        binding.cardsRecycler.setAdapter(adapter);
+        binding.sectionsRecycler.setAdapter(adapter);
+
+        // Add section button
+        binding.addSectionButton.setOnClickListener(v -> {
+            BottomAddCategoryFragment bottomAddCategoryFragment =
+                    BottomAddCategoryFragment.newInstance();
+            FragmentManager fm = getActivity().getFragmentManager();
+            bottomAddCategoryFragment.show(getActivity().getSupportFragmentManager(),"fragment_bottom_add_category");
+        });
 
         return binding.getRoot();
     }
@@ -73,14 +95,21 @@ public class ProjectFragment extends Fragment implements CheckBoxClickListener {
         mViewModel.updateCard(card);
     }
 
-    public interface OnProjectFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onProjectFragmentInteraction(Card item, CardStatus status);
-    }
+//    public interface OnProjectFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onProjectFragmentInteraction(Card item, CardStatus status);
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
     }
+
+//    @Override
+//    public void onCreateCard() {
+//        Toast toast = Toast.makeText(getApplicationContext(),
+//                "Карточка создана", Toast.LENGTH_SHORT);
+//        toast.show();
+//    }
 }

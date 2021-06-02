@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewmodel"
+            type="ru.techpark.new_new_gtdify.main.project.SectionViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <EditText
+                android:id="@+id/section_name"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginBottom="683dp"
+                android:layout_weight=".2"
+                android:gravity="center"
+                android:hint="Category name"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textIsSelectable="true"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@={viewmodel.sectionName}"
+                />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_category"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/white"
+                android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+                android:onClick="@{viewmodel::onSave}"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

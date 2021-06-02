@@ -27,9 +27,7 @@ public class App extends Application {
 
         database = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "gtdify-db").
-                allowMainThreadQueries().
                 build();
-
     }
 
     public AppDatabase getDatabase() {

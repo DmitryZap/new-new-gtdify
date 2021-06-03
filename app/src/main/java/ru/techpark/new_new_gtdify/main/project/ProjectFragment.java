@@ -1,7 +1,6 @@
 package ru.techpark.new_new_gtdify.main.project;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,6 +41,8 @@ public class ProjectFragment extends Fragment implements CheckBoxClickListener {
     private ProjectViewModel mViewModel;
     private @NonNull FragmentProjectBinding binding;
     private ProjectCardRecyclerViewAdapter adapter = new ProjectCardRecyclerViewAdapter(this);
+    private BottomAddCategoryFragment bottomAddCategoryFragment;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +83,12 @@ public class ProjectFragment extends Fragment implements CheckBoxClickListener {
 
         // Add section button
         binding.addSectionButton.setOnClickListener(v -> {
-            BottomAddCategoryFragment bottomAddCategoryFragment =
-                    BottomAddCategoryFragment.newInstance();
-            FragmentManager fm = getActivity().getFragmentManager();
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            if (bottomAddCategoryFragment == null && fm.findFragmentByTag("fragment_bottom_add_category") == null) {
+                bottomAddCategoryFragment = new BottomAddCategoryFragment();
+            } else if (bottomAddCategoryFragment == null) {
+                bottomAddCategoryFragment = (BottomAddCategoryFragment) fm.findFragmentByTag("fragment_bottom_add_category");
+            }
             bottomAddCategoryFragment.show(getActivity().getSupportFragmentManager(),"fragment_bottom_add_category");
         });
 
@@ -113,3 +118,4 @@ public class ProjectFragment extends Fragment implements CheckBoxClickListener {
 //        toast.show();
 //    }
 }
+

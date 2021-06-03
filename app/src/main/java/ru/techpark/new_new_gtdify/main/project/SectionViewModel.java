@@ -31,7 +31,7 @@ public class SectionViewModel extends AndroidViewModel {
         sectionRepository = new SectionRepository(application);
     }
 
-    public void onSave(View v) {
+    public void onSave() {
         Section section = new Section();
         section.setName(sectionName.getValue());
         sectionRepository.addSection(section);

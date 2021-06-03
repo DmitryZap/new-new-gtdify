@@ -103,7 +103,6 @@ public class CardViewModel extends AndroidViewModel {
 //            card.setIdentifier(UUID.randomUUID().toString());
 //             card.setStatus(CardStatus.TODO.toString());
             cardRepository.addCard(card);
-            activityListener.onProcess(ProcessType.ADD, card);
         }
 
         activityListener.onSuccess(true);

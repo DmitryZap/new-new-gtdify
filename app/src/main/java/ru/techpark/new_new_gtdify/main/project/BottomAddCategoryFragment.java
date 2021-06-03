@@ -22,16 +22,8 @@ import ru.techpark.new_new_gtdify.model.ProcessType;
 import ru.techpark.new_new_gtdify.model.local.AppDatabase;
 
 public class BottomAddCategoryFragment extends BottomSheetDialogFragment implements ActivityFragmentListener {
-    private static BottomAddCategoryFragment instance;
     private SectionViewModel mViewModel;
     private FragmentBottomAddCategoryBinding binding;
-
-    public static BottomAddCategoryFragment newInstance() {
-        if (instance == null) {
-            instance = new BottomAddCategoryFragment();
-        }
-        return instance;
-    }
 
 
     @Override
@@ -43,11 +35,11 @@ public class BottomAddCategoryFragment extends BottomSheetDialogFragment impleme
         mViewModel = new ViewModelProvider(this).get(SectionViewModel.class);
 
         mViewModel.setActivityFragmentListener(this);
-//        FragmentBottomAddCategoryBinding dataBinding = DataBindingUtil.
-//                inflate(LayoutInflater.from(getContext()),
-//                R.layout.fragment_bottom_add_category,
-//                        null, false);
-//        dataBinding.setViewmodel(mViewModel);
+        FragmentBottomAddCategoryBinding dataBinding = DataBindingUtil.
+                inflate(LayoutInflater.from(getContext()),
+                R.layout.fragment_bottom_add_category,
+                        null, false);
+        dataBinding.setViewmodel(mViewModel);
         return binding.getRoot();
     }
 

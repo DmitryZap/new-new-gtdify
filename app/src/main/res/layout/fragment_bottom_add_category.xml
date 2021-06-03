@@ -43,7 +43,7 @@
                 android:layout_height="50dp"
                 android:backgroundTint="@android:color/white"
                 android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
-                android:onClick="@{viewmodel::onSave}"
+                android:onClick="@{() -> viewmodel.onSave()}"
                 android:textSize="24sp" />
 
         </LinearLayout>
